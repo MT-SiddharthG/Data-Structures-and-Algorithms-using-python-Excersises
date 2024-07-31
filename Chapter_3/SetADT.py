@@ -1,8 +1,18 @@
 # Implementation of the Set ADT container using a Python list.
 
 class Set:
+    """
+    Set() creates an empty set instance.
+    Set(element, element, ...) creates a set instance with the given elements.
+    """
     # Creates an empty set instance or initializes it with elements.
     def __init__(self, *initElements):
+        """
+        Creates an empty set instance or initializes it with elements.
+
+        Parameters:
+            initElements (any): Initial elements to add to the set.
+        """
         self._theElements = list()
         if len(initElements) > 0:
             for element in initElements:
@@ -10,19 +20,46 @@ class Set:
 
     # Returns the number of items in the set.
     def __len__(self):
+        """
+        Returns the number of items in the set.
+        """
         return len(self._theElements)
 
     # Determines if an element is in the set.
     def __contains__(self, element):
+        """
+        Determines if an element is in the set.
+
+        Parameters:
+            element (any): The element to search for.
+        Returns:
+            (bool): True if the element is in the set, False otherwise.
+        """
         return element in self._theElements
 
     # Adds a new unique element to the set.
     def add(self, element):
+        """
+        Adds a new unique element to the set.
+
+        Parameters:
+            element (any): The element to add.
+        Returns:
+            (bool): True if the element was added, False otherwise.
+        """
         if element not in self:
             self._theElements.append(element)
 
     # Removes an element from the set.
     def remove(self, element):
+        """
+        Removes an element from the set.
+
+        Parameters:
+            element (any): The element to remove.
+        Returns:
+            (bool): True if the element was removed, False otherwise.
+        """
         assert element in self, "The element must be in the set."
         self._theElements.remove( element )
 
@@ -35,6 +72,14 @@ class Set:
 
     # Determines if this set is a subset of setB.
     def isSubsetOf(self, setB):
+        """
+        Determines if this set is a subset of setB.
+
+        Parameters:
+            setB (Set): The set to compare to.
+        Returns:
+            (bool): True if this set is a subset of setB, False otherwise.
+        """
         for element in self:
             if element not in setB:
                 return False
@@ -42,6 +87,14 @@ class Set:
 
     # Creates a new set from the union of this set and setB.
     def union(self, setB):
+        """
+        Creates a new set from the union of this set and setB.
+
+        Parameters:
+            setB (Set): The set to union with.
+        Returns:
+            (Set): The new set.
+        """
         newSet = Set()
         newSet._theElements.extend(self._theElements)
         for element in setB:
@@ -51,6 +104,14 @@ class Set:
 
     # Creates a new set from the intersection: self set and setB.
     def intersect(self, setB):
+        """
+        Creates a new set from the intersection: self set and setB.
+
+        Parameters:
+            setB (Set): The set to intersect with.
+        Returns:
+            (Set): The new set.
+        """
         newSet = Set()
         for element in self:
             if element in setB:
@@ -59,6 +120,14 @@ class Set:
 
     # Creates a new set from the difference: self set and setB.
     def difference(self, setB):
+        """
+        Creates a new set from the difference: self set and setB.
+
+        Parameters:
+            setB (Set): The set to difference with.
+        Returns:
+            (Set): The new set.
+        """
         newSet = Set()
         for element in self:
             if element not in setB:
@@ -98,6 +167,7 @@ class Set:
 
 
 class _SetIterator :
+    # An iterator for the Set ADT implemented as a Python list.
     def __init__( self, theList ):
         self._theItems = theList
         self._curItem = 0
