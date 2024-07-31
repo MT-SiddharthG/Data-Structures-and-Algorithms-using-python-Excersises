@@ -24,7 +24,7 @@
 
 # iter(): Returns an iterator for the array.
 
-from ..Chapter_2.ArrayADT import Array
+from Chapter_2.ArrayADT import Array
 
 # Implementation of the MultiArray ADT using a 1-D array.
 class MultiArray :
@@ -40,11 +40,15 @@ class MultiArray :
         for d in dimensions :
             assert d > 0, "Dimensions must be > 0."
             size *= d
-
+        print(self._dims)
         # Create the 1-D array to store the elements.
         self._elements = Array( size )
         # Create a 1-D array to store the equation factors.
         self._factors = Array( len(dimensions) )
+
+        for i in range(len(self._factors)):
+            self._factors[i] = 1
+
         self._computeFactors()
 
     # Returns the number of dimensions in the array.
@@ -53,7 +57,7 @@ class MultiArray :
 
     # Returns the length of the given dimension.
     def length( self, dim ):
-        assert dim >= 1 and dim < len(self._dims),"Dimension component out of range."
+        assert dim >= 0 and dim < len(self._dims),"Dimension component out of range."
         return self._dims[dim - 1]
 
     # Clears the array by setting all elements to the given value.
@@ -87,4 +91,55 @@ class MultiArray :
 
     # Computes the factor values used in the index equation.
     def _computeFactors( self ):
-        pass
+        for j in range( len(self._dims) - 1 ) :
+            self._factors[j + 1] = self._dims[j] * self._factors[j]
+            self._factors[0] = 1
+    
+    # # Returns the array's string representation.
+    # def __str__( self ):
+    #     return str(self._elements.__str__())
+    
+    # # Returns the array's string representation.
+    # def __repr__( self ):
+    #     return repr(self._elements)
+    
+# Test program
+if __name__ == '__main__':
+    # Example 1: Creating a 2D MultiArray (3 rows x 4 columns)
+    print("Example 1: Creating a 2D MultiArray (3 rows x 4 columns)")
+    ma_2d = MultiArray(3, 4)
+    print(f"Dimensions: {ma_2d.numDims()}, Length of dimension 1: {ma_2d.length(0)}, Length of dimension 2: {ma_2d.length(1)}")
+    
+    # Setting values in the 2D MultiArray
+    ma_2d[0, 1] = 10
+    ma_2d[1, 2] = 20
+    ma_2d[2, 3] = 30
+    
+    # Getting values from the 2D MultiArray
+    print(f"Value at position (0, 1): {ma_2d[0, 1]}")
+    print(f"Value at position (1, 2): {ma_2d[1, 2]}")
+    print(f"Value at position (2, 3): {ma_2d[2, 3]}")
+    print("--------------------------------------------------\n")
+
+    # Example 2: Creating a 3D MultiArray (2 x 3 x 4)
+    print("Example 2: Creating a 3D MultiArray (2 x 3 x 4)")
+    ma_3d = MultiArray(2, 3, 4)
+    print(f"Dimensions: {ma_3d.numDims()}, Length of dimension 1: {ma_3d.length(0)}, Length of dimension 2: {ma_3d.length(1)}, Length of dimension 3: {ma_3d.length(2)}")
+    
+    # Setting values in the 3D MultiArray
+    ma_3d[0, 1, 2] = 100
+    ma_3d[1, 2, 3] = 200
+    ma_3d[0, 2, 3] = 300
+    
+    # Getting values from the 3D MultiArray
+    print(f"Value at position (0, 1, 2): {ma_3d[0, 1, 2]}")
+    print(f"Value at position (1, 2, 3): {ma_3d[1, 2, 3]}")
+    print(f"Value at position (0, 2, 3): {ma_3d[0, 2, 3]}")
+    print("--------------------------------------------------\n")
+
+    # Example 3: Clearing a MultiArray
+    print("Example 3: Clearing a MultiArray")
+    ma_2d.clear(0)  # Setting all elements to 0
+    print(f"After clearing, value at position (0, 1): {ma_2d[0, 1]}")
+    print("--------------------------------------------------\n")
+    
