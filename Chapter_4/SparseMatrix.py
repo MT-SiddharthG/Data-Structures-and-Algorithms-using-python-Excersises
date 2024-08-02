@@ -160,12 +160,12 @@ def display_matrix(matrix):
 if __name__ == "__main__":
     # Create two sparse matrices
     print("Creating two sparse matrices...")
-    matrix1 = SparseMatrix(10, 10)
+    matrix1 = SparseMatrix(10000000, 10000000)
     matrix1[1, 2] = 10
     matrix1[3, 4] = 12
     matrix1[0, 0] = 5
 
-    matrix2 = SparseMatrix(10, 10)
+    matrix2 = SparseMatrix(10000000, 10000000)
     matrix2[1, 2] = 2
     matrix2[3, 4] = 4
     matrix2[0, 0] = 1
